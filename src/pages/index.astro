@@ -4,7 +4,7 @@ import Layout from '../layouts/Layout.astro';
 const portfolio = {
 	name: "Filip Pankretić",
 	tagline: "ML Engineer | Data Scientist | Software Developer",
-	aboutText: "TODO: Short bio",
+	aboutText: "Young and passionate software engineer with a will to learn. I completed my education in computer science on the Faculty of Electrical Engineering and Computing in Zagreb. After that, I started working at Infobip as a software engineer where I work on AI/ML projects and related products.",
 	photoPath: "https://media.licdn.com/dms/image/v2/D5603AQFSzomy6mbvcQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1729669052529?e=1774483200&v=beta&t=LRte4QjMofLvxE5mpVL4Pxa5cjjSMcTLilqRp3TQAOE",
 	photoAlt: "Portrait placeholder for portfolio owner",
 	experiences: [
@@ -12,10 +12,10 @@ const portfolio = {
 		{
 			role: "Junior Software Engineer",
 			company: "Infobip",
-			period: "2026 - present",
+			period: "2026 - Present",
 			logoPath: "https://www.liblogo.com/img-logo/max/in4182i21b-infobip-logo-infobip-api-integrations-.png",
 			logoAlt: "Infobip logo",
-			summary: "TODO: Expand on working with MCP servers.",
+			summary: "Exposing infobip products through MCP servers.",
 		},
 		{
 			role: "Software Engineer Intern",
@@ -23,7 +23,7 @@ const portfolio = {
 			period: "2022 - 2026",
 			logoPath: "https://www.liblogo.com/img-logo/max/in4182i21b-infobip-logo-infobip-api-integrations-.png",
 			logoAlt: "Infobip logo",
-			summary: "TODO: Short description of internship role and responsibilities.",
+			summary: "Exposed modern analytics for existing SaaS offerings.",
 		},
 	],
 	links: [
@@ -36,6 +36,28 @@ const portfolio = {
 const pageTitle = `${portfolio.name} | Portfolio`;
 const pageDescription = `Portfolio of ${portfolio.name}. About me, work experience, and useful links.`;
 const canonicalUrl = Astro.site ? new URL("/", Astro.site).toString() : undefined;
+const sameAsLinks = portfolio.links
+	.map((link) => link.href)
+	.filter((href) => !href.startsWith("mailto:"));
+const jsonLd = [
+	{
+		"@context": "https://schema.org",
+		"@type": "Person",
+		name: portfolio.name,
+		description: portfolio.tagline,
+		image: portfolio.photoPath,
+		url: canonicalUrl,
+		sameAs: sameAsLinks,
+		knowsAbout: ["Machine Learning", "Data Science", "Software Engineering"],
+	},
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		name: `${portfolio.name} Portfolio`,
+		url: canonicalUrl,
+		description: pageDescription,
+	},
+];
 ---
 
 <Layout
@@ -43,6 +65,8 @@ const canonicalUrl = Astro.site ? new URL("/", Astro.site).toString() : undefine
 	description={pageDescription}
 	canonical={canonicalUrl}
 	ogImage={portfolio.photoPath}
+	siteName={`${portfolio.name} Portfolio`}
+	jsonLd={jsonLd}
 >
 	<main class="page">
 		<div class="aurora" aria-hidden="true"></div>
@@ -64,7 +88,8 @@ const canonicalUrl = Astro.site ? new URL("/", Astro.site).toString() : undefine
 					src={portfolio.photoPath}
 					alt={portfolio.photoAlt}
 					class="profile-photo"
-					loading="lazy"
+					loading="eager"
+					fetchpriority="high"
 					width="420"
 					height="420"
 				/>
@@ -111,7 +136,12 @@ const canonicalUrl = Astro.site ? new URL("/", Astro.site).toString() : undefine
 				{
 					portfolio.links.map((link) => (
 						<li>
-							<a href={link.href} target="_blank" rel="noopener noreferrer">
+							<a
+								href={link.href}
+								target="_blank"
+								rel="noopener noreferrer"
+								aria-label={`Open ${link.label}`}
+							>
 								{link.label}
 							</a>
 						</li>
