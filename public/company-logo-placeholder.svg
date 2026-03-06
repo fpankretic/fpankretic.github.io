@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Company logo placeholder</title>
+  <desc id="desc">Abstract geometric placeholder for a company logo.</desc>
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#efb7cc" />
+      <stop offset="100%" stop-color="#d5749e" />
+    </linearGradient>
+  </defs>
+  <rect width="256" height="256" rx="52" fill="#1d161d" />
+  <path d="M48 60h74c24 0 42 18 42 42s-18 42-42 42H48z" fill="url(#g1)" />
+  <path d="M95 154h113v42H95z" fill="#f6edf3" fill-opacity=".9" />
+  <circle cx="184" cy="95" r="23" fill="#f6edf3" fill-opacity=".9" />
+</svg>

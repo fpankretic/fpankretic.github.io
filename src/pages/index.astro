@@ -1,0 +1,333 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const portfolio = {
+	name: "Filip Pankretić",
+	tagline: "ML Engineer | Data Scientist | Software Developer",
+	aboutText: "TODO: Short bio",
+	photoPath: "https://media.licdn.com/dms/image/v2/D5603AQFSzomy6mbvcQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1729669052529?e=1774483200&v=beta&t=LRte4QjMofLvxE5mpVL4Pxa5cjjSMcTLilqRp3TQAOE",
+	photoAlt: "Portrait placeholder for portfolio owner",
+	experiences: [
+		
+		{
+			role: "Junior Software Engineer",
+			company: "Infobip",
+			period: "2026 - present",
+			logoPath: "https://www.liblogo.com/img-logo/max/in4182i21b-infobip-logo-infobip-api-integrations-.png",
+			logoAlt: "Infobip logo",
+			summary: "TODO: Expand on working with MCP servers.",
+		},
+		{
+			role: "Software Engineer Intern",
+			company: "Infobip",
+			period: "2022 - 2026",
+			logoPath: "https://www.liblogo.com/img-logo/max/in4182i21b-infobip-logo-infobip-api-integrations-.png",
+			logoAlt: "Infobip logo",
+			summary: "TODO: Short description of internship role and responsibilities.",
+		},
+	],
+	links: [
+		{ label: "LinkedIn", href: "https://linkedin.com/in/filip-pankretic" },
+		{ label: "GitHub", href: "https://github.com/fpankretic" },
+		{ label: "Email", href: "mailto:filip.pankretic@gmail.com" },
+	],
+};
+
+const pageTitle = `${portfolio.name} | Portfolio`;
+const pageDescription = `Portfolio of ${portfolio.name}. About me, work experience, and useful links.`;
+const canonicalUrl = Astro.site ? new URL("/", Astro.site).toString() : undefined;
+---
+
+<Layout
+	title={pageTitle}
+	description={pageDescription}
+	canonical={canonicalUrl}
+	ogImage={portfolio.photoPath}
+>
+	<main class="page">
+		<div class="aurora" aria-hidden="true"></div>
+		<div class="grain" aria-hidden="true"></div>
+
+		<section class="hero section-space" aria-labelledby="intro-heading">
+			<p class="eyebrow">Portfolio</p>
+			<h1 id="intro-heading">{portfolio.name}</h1>
+			<p class="tagline">{portfolio.tagline}</p>
+		</section>
+
+		<section class="about section-space" aria-labelledby="about-heading">
+			<div class="section-header">
+				<p class="eyebrow">About Me</p>
+				<h2 id="about-heading">Who I Am</h2>
+			</div>
+			<div class="about-grid">
+				<img
+					src={portfolio.photoPath}
+					alt={portfolio.photoAlt}
+					class="profile-photo"
+					loading="lazy"
+					width="420"
+					height="420"
+				/>
+				<p>{portfolio.aboutText}</p>
+			</div>
+		</section>
+
+		<section class="experience section-space" aria-labelledby="experience-heading">
+			<div class="section-header">
+				<p class="eyebrow">Experience</p>
+				<h2 id="experience-heading">Work Experience</h2>
+			</div>
+			<div class="experience-list">
+				{
+					portfolio.experiences.map((item) => (
+						<article class="experience-card">
+							<div class="experience-head">
+								<img
+									src={item.logoPath}
+									alt={item.logoAlt}
+									class="company-logo"
+									loading="lazy"
+									width="56"
+									height="56"
+								/>
+								<h3>{item.role}</h3>
+							</div>
+							<p class="meta">
+								{item.company} <span aria-hidden="true">•</span> {item.period}
+							</p>
+							<p>{item.summary}</p>
+						</article>
+					))
+				}
+			</div>
+		</section>
+
+		<section class="links section-space" aria-labelledby="links-heading">
+			<div class="section-header">
+				<p class="eyebrow">Connect</p>
+				<h2 id="links-heading">Useful Links</h2>
+			</div>
+			<ul class="links-list">
+				{
+					portfolio.links.map((link) => (
+						<li>
+							<a href={link.href} target="_blank" rel="noopener noreferrer">
+								{link.label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</section>
+	</main>
+</Layout>
+
+<style>
+	:root {
+		--bg-main: #121013;
+		--bg-surface: #1d161d;
+		--bg-card: #271d26;
+		--pink-main: #d5749e;
+		--pink-soft: #efb7cc;
+		--text-main: #f6edf3;
+		--text-muted: #d5beca;
+		--border: #5f3f55;
+		--shadow: rgba(0, 0, 0, 0.35);
+	}
+
+	.page {
+		position: relative;
+		overflow: hidden;
+		background:
+			radial-gradient(circle at 20% 10%, #41243a 0%, transparent 40%),
+			radial-gradient(circle at 90% 90%, #45243b 0%, transparent 35%),
+			var(--bg-main);
+		color: var(--text-main);
+		padding: 3.5rem 1.25rem 4.5rem;
+		min-height: 100vh;
+	}
+
+	.aurora,
+	.grain {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+	}
+
+	.aurora {
+		background:
+			linear-gradient(120deg, transparent 15%, rgba(213, 116, 158, 0.1), transparent 70%),
+			linear-gradient(280deg, transparent 20%, rgba(239, 183, 204, 0.08), transparent 65%);
+		animation: pulse 8s ease-in-out infinite;
+	}
+
+	.grain {
+		opacity: 0.15;
+		background-image: radial-gradient(#ffffff 0.6px, transparent 0.6px);
+		background-size: 7px 7px;
+	}
+
+	.section-space {
+		position: relative;
+		z-index: 1;
+		width: min(100%, 980px);
+		margin: 0 auto;
+	}
+
+	.section-space + .section-space {
+		margin-top: 4.5rem;
+	}
+
+	.hero h1 {
+		font-size: clamp(2.25rem, 5vw, 4.5rem);
+		line-height: 1.05;
+		letter-spacing: -0.02em;
+		margin: 0;
+	}
+
+	.tagline {
+		max-width: 38rem;
+		font-size: clamp(1.05rem, 2vw, 1.35rem);
+		color: var(--text-muted);
+		margin: 1rem 0 0;
+	}
+
+	.eyebrow {
+		text-transform: uppercase;
+		letter-spacing: 0.12em;
+		font-size: 0.76rem;
+		font-weight: 600;
+		color: var(--pink-soft);
+		margin: 0 0 0.75rem;
+	}
+
+	.section-header h2 {
+		font-size: clamp(1.5rem, 3vw, 2.25rem);
+		margin: 0;
+	}
+
+	.about-grid {
+		margin-top: 1.5rem;
+		display: grid;
+		gap: 1.25rem;
+		align-items: center;
+		grid-template-columns: 1fr;
+	}
+
+	.profile-photo {
+		width: clamp(180px, 48vw, 280px);
+		height: clamp(180px, 48vw, 280px);
+		object-fit: cover;
+		border-radius: 50%;
+		border: 1px solid var(--border);
+		background: var(--bg-surface);
+		box-shadow: 0 18px 35px var(--shadow);
+	}
+
+	.about-grid p {
+		margin: 0;
+		background: color-mix(in srgb, var(--bg-card) 90%, black);
+		border: 1px solid var(--border);
+		border-radius: 1rem;
+		padding: 1.25rem;
+		color: var(--text-muted);
+		line-height: 1.7;
+	}
+
+	.experience-list {
+		margin-top: 1.5rem;
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 1rem;
+	}
+
+	.experience-card {
+		background: var(--bg-card);
+		border: 1px solid var(--border);
+		border-radius: 1rem;
+		padding: 1.2rem;
+		box-shadow: 0 10px 24px var(--shadow);
+	}
+
+	.experience-card h3 {
+		margin: 0;
+		font-size: 1.02rem;
+	}
+
+	.experience-head {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.company-logo {
+		width: 3rem;
+		height: 3rem;
+		object-fit: contain;
+		flex-shrink: 0;
+		padding: 0.32rem;
+		border-radius: 0.65rem;
+		border: 1px solid var(--border);
+		background: color-mix(in srgb, var(--bg-surface) 88%, black);
+	}
+
+	.meta {
+		margin: 0.55rem 0 0.8rem;
+		color: var(--pink-soft);
+		font-size: 0.92rem;
+	}
+
+	.experience-card p:last-child {
+		margin: 0;
+		color: var(--text-muted);
+		line-height: 1.6;
+	}
+
+	.links-list {
+		list-style: none;
+		padding: 0;
+		margin: 1.5rem 0 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+	}
+
+	.links-list a {
+		display: inline-block;
+		text-decoration: none;
+		font-weight: 600;
+		color: var(--text-main);
+		background: linear-gradient(180deg, var(--pink-main), #b95b82);
+		padding: 0.78rem 1.1rem;
+		border-radius: 999px;
+		transition: transform 0.2s ease, box-shadow 0.2s ease;
+		box-shadow: 0 8px 16px rgba(199, 105, 147, 0.35);
+	}
+
+	.links-list a:hover,
+	.links-list a:focus-visible {
+		transform: translateY(-2px);
+		box-shadow: 0 14px 20px rgba(199, 105, 147, 0.4);
+	}
+
+	@media (min-width: 760px) {
+		.page {
+			padding: 5.5rem 2rem;
+		}
+
+		.about-grid {
+			grid-template-columns: auto 1fr;
+			gap: 1.75rem;
+		}
+	}
+
+	@keyframes pulse {
+		0%,
+		100% {
+			opacity: 0.45;
+		}
+		50% {
+			opacity: 0.8;
+		}
+	}
+</style>
